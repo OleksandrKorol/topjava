@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 
+import java.util.Collection;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
@@ -14,10 +15,14 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
-    public List<User> getAll() {
+    @Autowired
+    public AbstractUserController(UserService service) {
+        this.service = service;
+    }
+
+    public Collection<User> getAll() {
         log.info("getAll");
         return service.getAll();
     }
