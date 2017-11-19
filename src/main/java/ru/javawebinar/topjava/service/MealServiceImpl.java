@@ -31,11 +31,6 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public Meal update(Meal meal, int userId) {
-        return repository.update(meal,  userId);
-    }
-
-    @Override
     public Meal save(Meal meal, int userId) {
         return repository.save(meal, userId);
     }

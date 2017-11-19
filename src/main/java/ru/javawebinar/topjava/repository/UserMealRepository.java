@@ -13,8 +13,6 @@ public interface UserMealRepository {
 
     Meal get(int id, int userId);
 
-    Meal update(Meal meal, int userId);
-
     List<Meal> getAll(int userId);
 
     List<Meal> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);

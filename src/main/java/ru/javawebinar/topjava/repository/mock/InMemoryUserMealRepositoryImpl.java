@@ -63,15 +63,6 @@ public class InMemoryUserMealRepositoryImpl implements UserMealRepository {
     }
 
     @Override
-    public Meal update(Meal meal, int userId) {
-        Integer mealId = meal.getId();
-
-        Map<Integer, Meal> userMeal = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
-        userMeal.put(mealId, meal);
-        return meal;
-    }
-
-    @Override
     public List<Meal> getAll(int userId) {
         return repository.get(userId).values().stream()
                 .sorted(USER_MEAL_COMPARATOR)

@@ -44,12 +44,6 @@ public class MealRestController {
         return service.save(meal, userId);
     }
 
-    public Meal update(Meal meal) {
-        int userId = AuthorizedUser.id();
-        log.info("update meal {} by user {} ", meal, userId);
-        return service.update(meal, userId);
-    }
-
     public void delete(int id) {
         int userId = AuthorizedUser.id();
         log.info("delete meal {} by user {} ", id, userId);

@@ -17,8 +17,6 @@ public interface MealService {
 
     List<Meal> getBetweenDatesTimes(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId);
 
-    Meal update(Meal meal, int userId);
-
     Meal save(Meal meal, int userId);
 
     void delete(int id, int userId) throws NotFoundException;
