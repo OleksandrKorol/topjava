@@ -1,5 +1,8 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -50,13 +53,16 @@ public class User extends AbstractNamedEntity {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+//    @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 200)
     private Set<Role> roles;
 
     @Column(name = "calories_per_day", columnDefinition = "int default 2000")
     @Range(min = 10, max = 10000)
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "user")
+    @OrderBy("dateTime DESC")
     private List<Meal> meals;
 
     public List<Meal> getMeals() {

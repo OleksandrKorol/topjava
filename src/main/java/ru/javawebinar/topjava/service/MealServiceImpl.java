@@ -2,9 +2,11 @@ package ru.javawebinar.topjava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,5 +54,16 @@ public class MealServiceImpl implements MealService {
     public Meal create(Meal meal, int userId) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
+    }
+
+//    @Autowired
+//    private UserRepository userRepository;
+
+    @Transactional
+    public Meal getWithUser(Integer id, Integer userId) {
+//        Meal meal = repository.get(id, userId);
+//        meal.setUser(userRepository.get(userId));
+//        return meal;
+        return repository.getWithUser(id, userId);
     }
 }

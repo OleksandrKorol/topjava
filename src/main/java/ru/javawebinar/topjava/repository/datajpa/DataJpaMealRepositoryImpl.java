@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.repository.datajpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
@@ -47,5 +48,10 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return crudRepository.findByCreatedDateBetween(startDate, endDate, userId);
+    }
+
+    @Override
+    public Meal getWithUser(Integer id, Integer userId) {
+        return crudRepository.getWithUser(id, userId);
     }
 }
