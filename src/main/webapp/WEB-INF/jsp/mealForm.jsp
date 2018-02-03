@@ -10,7 +10,7 @@
 <section>
     <%--<h3><a href="index.html">Home</a></h3>--%>
     <c:choose>
-        <c:when test="${updateOrEdit == 'create'}">
+        <c:when test="${requestScope['javax.servlet.forward.servlet_path'] == '/create'}">
         <h2> <spring:message code="meal.addMeal"/></h2>
         </c:when>
         <c:otherwise>
