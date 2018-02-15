@@ -41,16 +41,12 @@ public class RootControllerTest extends AbstractControllerTest {
     public void testMeals() throws Exception {
         List<MealWithExceed> expectedValue = MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay());
 
-        MvcResult result = mockMvc.perform(get("/meals"))
+        mockMvc.perform(get("/meals"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(view().name("meals"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
                 .andExpect(model().attribute("meals", hasSize(6)))
-                .andExpect(model().attributeExists("meals"))
-                .andReturn();
-
-        List<MealWithExceed> value = (List<MealWithExceed>) result.getModelAndView().getModel().get("meals");
-        assertMatchW(expectedValue, value);
+                .andExpect(model().attribute("meals", expectedValue));
     }
 }

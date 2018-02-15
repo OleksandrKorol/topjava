@@ -3,8 +3,10 @@ package ru.javawebinar.topjava.web.meal;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
@@ -25,16 +27,15 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void getBetween() throws Exception {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        ResultActions actions = mockMvc.perform(post(REST_URL + "filter")
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("startDate", "2018-01-03")
-                .param("startTime", "10:15")
-                .param("endDate", "2019-01-03")
-                .param("endTime", ""))
+        mockMvc.perform(get(REST_URL + "filter?startDate=2015-05-30&startTime=09:00&endDate=2015-05-30&endTime=")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(status().isOk());
-
+                .andExpect(contentJsonArray(
+                        MealsUtil.createWithExceed(MEAL1, false),
+                        MealsUtil.createWithExceed(MEAL2, false),
+                        MealsUtil.createWithExceed(MEAL3, false)
+                ));
 
     }
 
@@ -61,7 +62,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 mockMvc.perform(get(REST_URL))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(contentJson(MEALS))
+                        .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay())))
         );
     }
 
@@ -93,6 +94,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andDo(print())
                 .andExpect(status().isOk());
+
         assertMatch(mealService.get(MEAL1_ID, USER_ID), updated);
     }
 }

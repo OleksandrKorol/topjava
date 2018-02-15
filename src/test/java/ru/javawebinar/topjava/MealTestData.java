@@ -51,19 +51,19 @@ public class MealTestData {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
     }
 
-    public static void assertMatchW(Iterable<MealWithExceed> actual, Iterable<MealWithExceed> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
-    }
-
-    public static ResultMatcher contentJson(Meal... expected) {
-        return content().json(writeIgnoreProps(Arrays.asList(expected), "user"));
-    }
-
-    public static ResultMatcher contentJson(Collection<Meal> expected) {
+    public static ResultMatcher contentJson(Meal expected) {
         return content().json(writeIgnoreProps(expected, "user"));
     }
 
-    public static ResultMatcher contentJson(Meal expected) {
+    public static <T> ResultMatcher contentJson(Collection<T> expected) {
+        return content().json(writeIgnoreProps(expected, "user"));
+    }
+
+    public static ResultMatcher contentJsonArray(MealWithExceed... expected) {
+        return content().json(writeIgnoreProps(Arrays.asList(expected), "user"));
+    }
+
+    public static ResultMatcher contentJson(MealWithExceed expected) {
         return content().json(writeIgnoreProps(expected, "user"));
     }
 }

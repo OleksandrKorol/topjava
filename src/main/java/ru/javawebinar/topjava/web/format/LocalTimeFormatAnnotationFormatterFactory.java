@@ -28,6 +28,6 @@ public class LocalTimeFormatAnnotationFormatterFactory implements AnnotationForm
     }
 
     private Formatter<LocalTime> getDateFormat(LocalTimeParsing annotation, Class<?> fieldType) {
-        return new LocalTimeFormatter(annotation.pattern);
+        return new LocalTimeFormatter();
     }
 }

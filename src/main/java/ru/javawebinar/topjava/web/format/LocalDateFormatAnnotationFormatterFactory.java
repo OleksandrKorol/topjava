@@ -25,6 +25,6 @@ public class LocalDateFormatAnnotationFormatterFactory implements AnnotationForm
     }
 
     private Formatter<LocalDate> getDateFormat(LocalDateParsing annotation, Class<?> fieldType) {
-        return new LocalDateFormatter(annotation.pattern);
+        return new LocalDateFormatter();
     }
 }
