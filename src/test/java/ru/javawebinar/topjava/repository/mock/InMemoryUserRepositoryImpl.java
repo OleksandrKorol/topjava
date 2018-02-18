@@ -55,6 +55,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean active(int id, boolean enabled) {
+        return false;
+    }
+
+    @Override
     public User getByEmail(String email) {
         return repository.values().stream()
                 .filter(u -> email.equals(u.getEmail()))

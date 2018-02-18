@@ -21,4 +21,6 @@ public interface UserService {
     List<User> getAll();
 
     User getWithMeals(int id);
+
+    void active(int id, boolean enabled) throws NotFoundException;
 }

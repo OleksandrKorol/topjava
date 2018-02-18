@@ -1,13 +1,4 @@
 function makeEditable() {
-    $(".delete").click(function () {
-        deleteRow($(this).attr("id"));
-    });
-
-    $("#detailsForm").submit(function () {
-        save();
-        return false;
-    });
-
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
     });
@@ -78,4 +69,42 @@ function failNoty(jqXHR) {
         type: "error",
         layout: "bottomRight"
     }).show();
+}
+
+function filter() {
+    var form = $("#filter");
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl + "filter",
+        data: form.serialize(),
+        success: function (data) {
+            datatableApi.clear().rows.add(data).draw();
+        }
+    });
+}
+
+function cleaneFilter() {
+    $("#filter").find(":input").val("");
+    updateTable();
+}
+
+function enable(param, id) {
+    var enable = param.prop('checked');
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl + "enable",
+        data: {
+            enabled: enable,
+            id: id
+        },
+        success: function () {
+            if (enable) {
+                param.parent().parent().removeClass("disabled");
+                successNoty("Recording is activated");
+            } else {
+                successNoty("Recording is deactivated");
+                param.parent().parent().addClass("disabled");
+            }
+        }
+    });
 }
