@@ -3,6 +3,7 @@ function makeEditable() {
         failNoty(jqXHR);
     });
 
+    init();
     // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
     $.ajaxSetup({cache: false});
 }
@@ -26,6 +27,7 @@ function deleteRow(id) {
 function updateTable() {
     $.get(ajaxUrl, function (data) {
         datatableApi.clear().rows.add(data).draw();
+        init();
     });
 }
 
@@ -89,22 +91,28 @@ function cleaneFilter() {
 }
 
 function enable(param, id) {
-    var enable = param.prop('checked');
+    var enable = param.is(':checked');
+    if(enable) {
+        param.parent().parent().removeClass("disabled");
+    } else {
+        param.parent().parent().addClass("disabled");
+    }
     $.ajax({
-        type: "GET",
-        url: ajaxUrl + "enable",
-        data: {
-            enabled: enable,
-            id: id
-        },
+        type: "POST",
+        url: ajaxUrl + id,
+        data: 'enabled=' + enable,
         success: function () {
-            if (enable) {
-                param.parent().parent().removeClass("disabled");
-                successNoty("Recording is activated");
-            } else {
-                successNoty("Recording is deactivated");
-                param.parent().parent().addClass("disabled");
-            }
+            successNoty(enable ? "enable": "disable");
         }
     });
+}
+
+function init() {
+    $(":checkbox").each(function () {
+        if($(this).is(":checked")) {
+            $(this).parent().parent().removeClass("disabled");
+        } else {
+            $(this).parent().parent().addClass("disabled");
+        }
+    })
 }

@@ -26,11 +26,6 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean active(int id, boolean enabled) {
-        return crudRepository.active(id, enabled) != 0;
-    }
-
-    @Override
     public User get(int id) {
         return crudRepository.findById(id).orElse(null);
     }
