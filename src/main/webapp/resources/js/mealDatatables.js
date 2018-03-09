@@ -5,7 +5,7 @@ function updateTable() {
     $.ajax({
         type: "POST",
         url: ajaxUrl + "filter",
-        data: $("#filter").serialize(),
+        data: $("#filter").serialize()
     }).done(updateTableByData);
 }
 
@@ -15,12 +15,44 @@ function clearFilter() {
 }
 
 $(function () {
+    var timeParam = {
+        datepicker:false,
+        format: "H:i",
+        lang:'ru'
+    };
+
+    var dateParam = {
+        timepicker:false,
+        format: 'Y-m-d',
+        lang:'ru'
+    };
+
+    $("#startDate").datetimepicker(dateParam);
+    $("#endDate").datetimepicker(dateParam);
+    $("#startTime").datetimepicker(timeParam);
+    $("#endTime").datetimepicker(timeParam);
+
+    $("#dateTime").datetimepicker({
+        format:'Y-m-d H:i',
+        lang:'ru'
+    });
+
     datatableApi = $("#datatable").DataTable({
+        "ajax": {
+            "url": ajaxUrl,
+            "dataSrc": ""
+        },
         "paging": false,
         "info": true,
         "columns": [
             {
-                "data": "dateTime"
+                "data": "dateTime",
+                "render": function (date, type, row) {
+                    if (type === "display") {
+                        return date.substring(0, 16).replace('T', ' ');
+                    }
+                    return date;
+                }
             },
             {
                 "data": "description"
@@ -30,11 +62,13 @@ $(function () {
             },
             {
                 "defaultContent": "Edit",
-                "orderable": false
+                "orderable": false,
+                "render": renderEditBtn
             },
             {
                 "defaultContent": "Delete",
-                "orderable": false
+                "orderable": false,
+                "render": renderDeleteBtn
             }
         ],
         "order": [
@@ -42,7 +76,14 @@ $(function () {
                 0,
                 "desc"
             ]
-        ]
+        ],
+        "createdRow": function (row, data, dataIndex) {
+            if (!data.exceed) {
+                $(row).addClass("exceeded");
+            } else {
+                $(row).addClass("normal");
+            }
+        },
+        "initComplete": makeEditable
     });
-    makeEditable();
 });
