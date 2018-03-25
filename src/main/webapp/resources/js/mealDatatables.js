@@ -15,25 +15,39 @@ function clearFilter() {
 }
 
 $(function () {
-    var timeParam = {
-        datepicker:false,
-        format: "H:i",
-        lang:'ru'
-    };
-
-    var dateParam = {
-        timepicker:false,
+    var startDate = $('#startDate');
+    var endDate = $('#endDate');
+    startDate.datetimepicker({
         format: 'Y-m-d',
-        lang:'ru'
-    };
+        lang:'ru',
+        formatDate: 'Y-m-d',
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: endDate.val() ? endDate.val() : false
+            })
+        },
+        timepicker: false
+    });
+    endDate.datetimepicker({
+        format: 'Y-m-d',
+        lang:'ru',
+        formatDate: 'Y-m-d',
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: startDate.val() ? startDate.val() : false
+            })
+        },
+        timepicker: false
+    });
 
-    $("#startDate").datetimepicker(dateParam);
-    $("#endDate").datetimepicker(dateParam);
-    $("#startTime").datetimepicker(timeParam);
-    $("#endTime").datetimepicker(timeParam);
+    jQuery('#startTime, #endTime').datetimepicker({
+        datepicker: false,
+        format: 'H:i',
+        lang:'ru'
+    });
 
     $("#dateTime").datetimepicker({
-        format:'Y-m-d H:i',
+        format: 'Y-m-d H:i',
         lang:'ru'
     });
 
@@ -49,7 +63,7 @@ $(function () {
                 "data": "dateTime",
                 "render": function (date, type, row) {
                     if (type === "display") {
-                        return date.substring(0, 16).replace('T', ' ');
+                        return formatDate(date);
                     }
                     return date;
                 }
@@ -78,11 +92,7 @@ $(function () {
             ]
         ],
         "createdRow": function (row, data, dataIndex) {
-            if (!data.exceed) {
-                $(row).addClass("exceeded");
-            } else {
-                $(row).addClass("normal");
-            }
+            $(row).addClass(data.exceed ? "normal" : "exceeded");
         },
         "initComplete": makeEditable
     });

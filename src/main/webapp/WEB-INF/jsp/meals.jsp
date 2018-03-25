@@ -76,21 +76,21 @@
             </tr>
             </thead>
             <%--<c:forEach items="${meals}" var="meal">--%>
-                <%--<jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>--%>
-                <%--<tr class="${meal.exceed ? 'exceeded' : 'normal'}">--%>
-                    <%--<td>--%>
-                            <%--&lt;%&ndash;${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;<%=TimeUtil.toString(meal.getDateTime())%>&ndash;%&gt;--%>
-                            <%--&lt;%&ndash;${fn:replace(meal.dateTime, 'T', ' ')}&ndash;%&gt;--%>
-                            <%--${fn:formatDateTime(meal.dateTime)}--%>
-                    <%--</td>--%>
-                    <%--<td>${meal.description}</td>--%>
-                    <%--<td>${meal.calories}</td>--%>
-                    <%--<td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>--%>
-                    <%--<td><a onclick="deleteRow(${meal.id})">--%>
-                        <%--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--%>
-                    <%--</a></td>--%>
-                <%--</tr>--%>
+            <%--<jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>--%>
+            <%--<tr class="${meal.exceed ? 'exceeded' : 'normal'}">--%>
+            <%--<td>--%>
+            <%--&lt;%&ndash;${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}&ndash;%&gt;--%>
+            <%--&lt;%&ndash;<%=TimeUtil.toString(meal.getDateTime())%>&ndash;%&gt;--%>
+            <%--&lt;%&ndash;${fn:replace(meal.dateTime, 'T', ' ')}&ndash;%&gt;--%>
+            <%--${fn:formatDateTime(meal.dateTime)}--%>
+            <%--</td>--%>
+            <%--<td>${meal.description}</td>--%>
+            <%--<td>${meal.calories}</td>--%>
+            <%--<td><a><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>--%>
+            <%--<td><a onclick="deleteRow(${meal.id})">--%>
+            <%--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--%>
+            <%--</a></td>--%>
+            <%--</tr>--%>
             <%--</c:forEach>--%>
         </table>
     </div>
@@ -108,8 +108,9 @@
                     <input type="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="dateTime" class="control-label col-xs-3"><spring:message
-                                code="meal.dateTime"/></label>
+                        <label for="dateTime" class="control-label col-xs-3">
+                            <spring:message code="meal.dateTime"/>
+                        </label>
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="dateTime" name="dateTime"

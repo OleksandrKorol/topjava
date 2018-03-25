@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
@@ -16,17 +15,6 @@ import static java.util.stream.Collectors.toList;
 public class MealsUtil {
 
     private MealsUtil() {
-    }
-
-    public static Meal createNewFromTo(MealTo newMeal) {
-        return new Meal(null, newMeal.getDateTime(), newMeal.getDescription(), newMeal.getCalories());
-    }
-
-    public static Meal updateFromTo(Meal meal, MealTo mealWithExceed) {
-        meal.setDescription(mealWithExceed.getDescription());
-        meal.setCalories(mealWithExceed.getCalories());
-        meal.setDateTime(mealWithExceed.getDateTime());
-        return meal;
     }
 
     public static List<MealWithExceed> getWithExceeded(Collection<Meal> meals, int caloriesPerDay) {
